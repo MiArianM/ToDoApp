@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/Css/Style.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="FlexContainer">
+    <div class="HeadDoing">
+        <h1>ToDoApp | -Mim</h1>
+        <div class="FlexAdds">
+            <input placeholder = "➙ Write Your Task !" type="text" class="di" />
+            <div class="form-container">
+                <form>
+                   <input type="text" placeholder = "➾ Pick a date" class="date-input di" />
+                </form>
+             </div>
+             <button class="custom-btn btn-12"><span>Add !</span><span>Done ?</span></button>
+        </div>
+        <div class="FlexxButts">
+            <button>All</button>
+            <button>Pending</button>
+            <button>Completed</button>
+            <button>Delete All</button>
+        </div>
+    </div>
+    <div class="MidDoing">
+        <table class="tableMain">
+            <caption>Do List 📝</caption>
+            <thead>
+              <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-category="TaskThing">Record eFootbal</td>
+                <td data-category="DateThing">04/01/2016</td>
+                <td data-category="StatusThing">Pending</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+              <tr>
+                <td scope="row" data-category="TaskThing">Painting The Home</td>
+                <td data-category="DateThing">03/01/2016</td>
+                <td data-category="StatusThing">Pending</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+              <tr>
+                <td scope="row" data-category="TaskThing">Studying Physics</td>
+                <td data-category="DateThing">03/01/2016</td>
+                <td data-category="StatusThing">Completed</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+              <tr>
+                <td scope="row" data-category="TaskThing">GYM Time</td>
+                <td data-category="DateThing">02/01/2016</td>
+                <td data-category="StatusThing">Completed</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+              <tr>
+                <td scope="row" data-category="TaskThing">Read Fictional Book</td>
+                <td data-category="DateThing">02/01/2016</td>
+                <td data-category="StatusThing">Pending</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+              <tr>
+                <td scope="row" data-category="TaskThing">Play With Ma Puppey</td>
+                <td data-category="DateThing">02/01/2016</td>
+                <td data-category="StatusThing">Pending</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+              <tr>
+                <td scope="row" data-category="TaskThing">Watching News</td>
+                <td data-category="DateThing">02/01/2016</td>
+                <td data-category="StatusThing">Completed</td>
+                <td data-category="ActionThing">
+                    <button class="raise ed">Edit</button>
+                    <button class="raise ou">On</button>
+                    <button class="raise dl">Delete</button>
+                </td>
+              </td>
+            </tbody>
+          </table>
+    </div>
+</div>
+    <script src="/Javascript/Logic.js"></script>
+</body>
+</html>
