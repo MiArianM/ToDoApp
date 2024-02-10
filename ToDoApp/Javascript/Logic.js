@@ -1,3 +1,7 @@
+let plus = document.getElementById("plus");
+let trs = document.querySelectorAll("tr");
+let th = document.querySelector("th");
+console.log(trs);
 class Calendar {
   constructor(inputSelector) {
     this.input = document.querySelector(inputSelector);
@@ -165,12 +169,50 @@ class Calendar {
     });
   }
 }
-
-new Calendar(".date-input");
-let plus = document.getElementById("plus");
-
 function plusToggle() {
   plus.classList.toggle("plus--active");
 }
 
-plus.addEventListener("click", plusToggle);
+window.addEventListener("load", () => {
+  new Calendar(".date-input");
+  try {
+    plus.addEventListener("click", plusToggle);
+  } catch (error) {}
+});
+
+let butts = document.querySelector(".FlexxButts").children;
+console.dir(butts);
+for (let index = 0; index < butts.length; index++) {
+  butts[index].addEventListener("click", () => {
+    const content = butts[index].textContent;
+    console.log(content);
+    if (content === "All") {
+      trs.forEach((tr) => {
+        tr.style.display = "table-row";
+      });
+    } else if (content === "Pending") {
+      trs.forEach((tr) => {
+        if (tr.children[2].innerText === "Pending") {
+          tr.style.display = "table-row";
+        } else {
+          tr.style.display = "none";
+          th.parentElement.style.display = "table-row";
+        }
+      });
+    } else if (content === "Completed") {
+      trs.forEach((tr) => {
+        if (tr.children[2].innerText === "Completed") {
+          tr.style.display = "table-row";
+        } else {
+          tr.style.display = "none";
+          th.parentElement.style.display = "table-row";
+        }
+      });
+    } else {
+      trs.forEach((tr) => {
+        tr.style.display = "none";
+        th.parentElement.style.display = "table-row";
+      });
+    }
+  });
+}
