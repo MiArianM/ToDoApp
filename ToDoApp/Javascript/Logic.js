@@ -35,10 +35,30 @@ class Calendar {
     this.monthContainer.classList.add("month-and-year");
     this.monthContainer.innerHTML = `<h4>${this.getMonth()} ◻️ ${this.getYear()}</h4>`;
     this.popupContainer.appendChild(this.monthContainer);
-
+    this.createButtons();
     this.populateTable(this.selectedMonth, this.selectedYear);
   }
+  createButtons() {
+    const prev = document.createElement("button");
+    prev.classList.add("button", "prev");
+    prev.innerHTML = "<i class='fas fa-chevron-left'></i>";
+    const next = document.createElement("button");
+    next.classList.add("button", "next");
+    next.innerHTML = "<i class='fas fa-chevron-right'></i>";
 
+    prev.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.updateMonth(this.selectedMonth - 1);
+    });
+
+    next.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.updateMonth(this.selectedMonth + 1);
+    });
+
+    this.popupContainer.appendChild(prev);
+    this.popupContainer.appendChild(next);
+  }
   populateTable(month, year) {
     this.table.innerHTML = "";
 
@@ -112,9 +132,9 @@ class Calendar {
       this.selectedYear++;
       this.selectedMonth = 0;
     }
-    this.monthContainer.innerHTML = `<h4>${this.months[this.selectedMonth]} ${
-      this.selectedYear
-    }</h4>`;
+    this.monthContainer.innerHTML = `<h4>${
+      this.months[this.selectedMonth]
+    } ◻️ ${this.selectedYear}</h4>`;
 
     this.populateTable(this.selectedMonth, this.selectedYear);
   }
