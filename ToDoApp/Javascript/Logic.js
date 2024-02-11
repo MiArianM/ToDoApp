@@ -1,3 +1,4 @@
+//Global Variables
 let plus = document.getElementById("plus");
 let trs = document.querySelectorAll("tr");
 let th = document.querySelector("th");
@@ -7,7 +8,14 @@ let donebutt = document.querySelector(".custom-btn");
 let addplaceparent = document.querySelector(".rightinserting").parentNode;
 let addplace = document.querySelector(".rightinserting");
 let actionbutton = document.querySelectorAll(".raise");
-console.log(inputs);
+//........... Some LOGICS
+window.addEventListener("load", () => {
+  new Calendar(".date-input");
+  categorizing();
+  try {
+    plus.addEventListener("click", plusToggle);
+  } catch (error) {}
+});
 class Calendar {
   constructor(inputSelector) {
     this.nameinput = document.querySelector(".taskname");
@@ -76,37 +84,31 @@ class Calendar {
       let taskdate = inputs[1].value;
       let fi = document.createTextNode(taskname);
       let s = document.createTextNode(taskdate);
-      let t = document.createTextNode("pending");
+      let t = document.createTextNode("Pending");
       let Editbutton = document.createElement("button");
-      Editbutton.classList = "raise ed";
-      Editbutton.textContent = "Edit";
       let Onbutton = document.createElement("button");
-      Onbutton.classList = "raise ou";
-      Onbutton.textContent = "On";
       let Removebutton = document.createElement("button");
-      Removebutton.classList = "raise dl";
-      Removebutton.textContent = "Delete";
-
       let newrow = document.createElement("tr");
       let newcell1 = document.createElement("td");
-      newcell1.appendChild(fi);
       let newcell2 = document.createElement("td");
-      newcell2.appendChild(s);
       let newcell3 = document.createElement("td");
-      newcell3.appendChild(t);
       let newcell4 = document.createElement("td");
-      newcell4.append(Editbutton, Onbutton, Removebutton);
       let newcells = [newcell1, newcell2, newcell3, newcell4];
-      console.log(taskname, taskdate);
-
+      Editbutton.classList = "raise ed";
+      Editbutton.textContent = "Edit";
+      Onbutton.classList = "raise ou";
+      Onbutton.textContent = "On";
+      Removebutton.classList = "raise dl";
+      Removebutton.textContent = "Delete";
+      newcell1.appendChild(fi);
+      newcell2.appendChild(s);
+      newcell3.appendChild(t);
+      newcell4.append(Editbutton, Onbutton, Removebutton);
       newcells.forEach((cell) => {
         newrow.append(cell);
-        cell.style.cssText =
-          "padding: 1.625em,text-align: center,font-size: 24px";
       });
-      newrow.style.cssText =
-        "background-color: #f8f8f8,border: 1px solid #ddd,padding: .35em";
-      addplaceparent.insertBefore(newrow, addplace);
+      addplaceparent.insertBefore(newrow, addplace.nextSibling);
+      categorizing(newrow);
     });
   }
   //Other Functions
@@ -217,44 +219,56 @@ function plusToggle() {
   plus.classList.toggle("plus--active");
 }
 
-window.addEventListener("load", () => {
-  new Calendar(".date-input");
-  try {
-    plus.addEventListener("click", plusToggle);
-  } catch (error) {}
-});
+function categorizing(newrows) {
+  newrows = newrows || null;
+  for (let index = 0; index < butts.length; index++) {
+    butts[index].addEventListener("click", () => {
+      const content = butts[index].textContent;
+      if (content === "All") {
+        if (newrows) {
+          newrows.classList = "trow";
+        }
 
-for (let index = 0; index < butts.length; index++) {
-  butts[index].addEventListener("click", () => {
-    const content = butts[index].textContent;
-    console.log(content);
-    if (content === "All") {
-      trs.forEach((tr) => {
-        tr.style.display = "table-row";
-      });
-    } else if (content === "Pending") {
-      trs.forEach((tr) => {
-        if (tr.children[2].innerText === "Pending") {
+        trs.forEach((tr) => {
           tr.style.display = "table-row";
-        } else {
+        });
+      } else if (content === "Pending") {
+        if (newrows) {
+          newrows.children[2].innerText === "Pending"
+            ? (newrows.style.display = "table-row")
+            : (newrows.style.display = "none");
+        }
+
+        trs.forEach((tr) => {
+          if (tr.children[2].innerText === "Pending") {
+            tr.style.display = "table-row";
+          } else {
+            tr.style.display = "none";
+            th.parentElement.style.display = "table-row";
+          }
+        });
+      } else if (content === "Completed") {
+        if (newrows) {
+          newrows.children[2].innerText === "Completed"
+            ? (newrows.style.display = "table-row")
+            : (newrows.style.display = "none");
+        }
+
+        trs.forEach((tr) => {
+          if (tr.children[2].innerText === "Completed") {
+            tr.style.display = "table-row";
+          } else {
+            tr.style.display = "none";
+            th.parentElement.style.display = "table-row";
+          }
+        });
+      } else {
+        newrows.style.display = "none";
+        trs.forEach((tr) => {
           tr.style.display = "none";
           th.parentElement.style.display = "table-row";
-        }
-      });
-    } else if (content === "Completed") {
-      trs.forEach((tr) => {
-        if (tr.children[2].innerText === "Completed") {
-          tr.style.display = "table-row";
-        } else {
-          tr.style.display = "none";
-          th.parentElement.style.display = "table-row";
-        }
-      });
-    } else {
-      trs.forEach((tr) => {
-        tr.style.display = "none";
-        th.parentElement.style.display = "table-row";
-      });
-    }
-  });
+        });
+      }
+    });
+  }
 }
