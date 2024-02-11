@@ -40,6 +40,7 @@
 .FlexAdds>input{
     width: 40%;
     margin: 30px 5px;
+    
 }
 .FlexAdds button{
     width: 5%;
@@ -105,7 +106,7 @@
   .FlexAdds>.di{
     margin:18px 1px;
     height:0;
-    padding:30px
+    padding:30px 55px
   }
   .di:focus{
     box-shadow: 0 0 8px rgba(72, 193, 249, .4);
@@ -370,9 +371,17 @@
     }
 }
 form i {
+  cursor: default;
   margin-left: 1.5rem;
   z-index: 2;
   font-size: 28px;
-  padding: 17px 28px 0 23px;
+  padding: 17px 0 0 23px;
+  position: absolute;
+}
+.FlexAdds>i{
+  cursor: default;
+  z-index: 2;
+  font-size: 28px;
+  padding: 35px 0 0 15px;
   position: absolute;
 }
