@@ -262,10 +262,14 @@ function categorizing(newrows) {
             th.parentElement.style.display = "table-row";
           }
         });
-      } else {
-        newrows.style.display = "none";
+      } else if (content === "Delete All") {
+        if (newrows) {
+          newrows.remove();
+        }
         trs.forEach((tr) => {
-          tr.style.display = "none";
+          if (tr.classList.value !== "rightinserting") {
+            tr.remove();
+          }
           th.parentElement.style.display = "table-row";
         });
       }
