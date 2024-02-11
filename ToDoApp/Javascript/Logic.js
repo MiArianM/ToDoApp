@@ -1,9 +1,16 @@
 let plus = document.getElementById("plus");
 let trs = document.querySelectorAll("tr");
 let th = document.querySelector("th");
-console.log(trs);
+let butts = document.querySelector(".FlexxButts").children;
+let inputs = document.querySelectorAll(".di");
+let donebutt = document.querySelector(".custom-btn");
+let addplaceparent = document.querySelector(".rightinserting").parentNode;
+let addplace = document.querySelector(".rightinserting");
+let actionbutton = document.querySelectorAll(".raise");
+console.log(inputs);
 class Calendar {
   constructor(inputSelector) {
+    this.nameinput = document.querySelector(".taskname");
     this.input = document.querySelector(inputSelector);
     this.form = this.input.parentElement;
     this.popupContainer = null;
@@ -26,11 +33,11 @@ class Calendar {
     ];
     this.selectedMonth = new Date().getMonth();
     this.selectedYear = new Date().getFullYear();
-
     this.buildCalendar();
     this.setMainEventListener();
+    this.DoneButton();
   }
-
+  //Main Functions
   buildCalendar() {
     this.popupContainer = document.createElement("div");
     this.popupContainer.classList.add("calendar-popup");
@@ -63,6 +70,46 @@ class Calendar {
     this.popupContainer.appendChild(prev);
     this.popupContainer.appendChild(next);
   }
+  DoneButton() {
+    donebutt.addEventListener("click", () => {
+      let taskname = inputs[0].value;
+      let taskdate = inputs[1].value;
+      let fi = document.createTextNode(taskname);
+      let s = document.createTextNode(taskdate);
+      let t = document.createTextNode("pending");
+      let Editbutton = document.createElement("button");
+      Editbutton.classList = "raise ed";
+      Editbutton.textContent = "Edit";
+      let Onbutton = document.createElement("button");
+      Onbutton.classList = "raise ou";
+      Onbutton.textContent = "On";
+      let Removebutton = document.createElement("button");
+      Removebutton.classList = "raise dl";
+      Removebutton.textContent = "Delete";
+
+      let newrow = document.createElement("tr");
+      let newcell1 = document.createElement("td");
+      newcell1.appendChild(fi);
+      let newcell2 = document.createElement("td");
+      newcell2.appendChild(s);
+      let newcell3 = document.createElement("td");
+      newcell3.appendChild(t);
+      let newcell4 = document.createElement("td");
+      newcell4.append(Editbutton, Onbutton, Removebutton);
+      let newcells = [newcell1, newcell2, newcell3, newcell4];
+      console.log(taskname, taskdate);
+
+      newcells.forEach((cell) => {
+        newrow.append(cell);
+        cell.style.cssText =
+          "padding: 1.625em,text-align: center,font-size: 24px";
+      });
+      newrow.style.cssText =
+        "background-color: #f8f8f8,border: 1px solid #ddd,padding: .35em";
+      addplaceparent.insertBefore(newrow, addplace);
+    });
+  }
+  //Other Functions
   populateTable(month, year) {
     this.table.innerHTML = "";
 
@@ -107,17 +154,14 @@ class Calendar {
 
       td.addEventListener("click", (e) => {
         const selectedDay = e.target.innerHTML;
-        this.fillInput(selectedDay);
+        this.fillDate(selectedDay);
         this.hideCalendar();
       });
-
       tr.appendChild(td);
     }
-
     this.popupContainer.appendChild(this.table);
   }
-
-  fillInput(day) {
+  fillDate(day) {
     day = day < 10 ? "0" + day : day;
     let month = null;
     month =
@@ -180,8 +224,6 @@ window.addEventListener("load", () => {
   } catch (error) {}
 });
 
-let butts = document.querySelector(".FlexxButts").children;
-console.dir(butts);
 for (let index = 0; index < butts.length; index++) {
   butts[index].addEventListener("click", () => {
     const content = butts[index].textContent;
