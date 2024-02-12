@@ -11,6 +11,8 @@ let taskname = document.querySelector(".taskname");
 let taskdate = document.querySelector(".date-input");
 let i = 0;
 let j = 0;
+let evento1;
+let evento2;
 let typeSpeed = 100;
 let taskmassage = "Bring Your New Task Name !";
 let Datemassage = "Pick a Right Date !";
@@ -294,17 +296,19 @@ function actioningbutton(newrows) {
       abutt.addEventListener("click", (event) => {
         console.dir(taskname);
         if (event.target.innerText === "Edit") {
+          evento1 = event;
           donebutt.removeEventListener("click", Calendar.adddontbutton);
           changingdonebutt_inputs();
-          donebutt.addEventListener("click", (e) => {
-            event.target.parentElement.parentElement.children[0].innerText =
+          donebutt.addEventListener("click", () => {
+            evento1.target.parentElement.parentElement.children[0].innerText =
               taskname.value;
-            event.target.parentElement.parentElement.children[1].innerText =
+            evento1.target.parentElement.parentElement.children[1].innerText =
               taskdate.value;
+            taskname.value = "";
+            taskdate.value = "";
+            donebutt.children[0].innerText = "Add !";
+            donebutt.children[1].innerText = "Done ?";
           });
-          donebutt.children[0].innerText = "Add !";
-          donebutt.children[1].innerText = "Done ?";
-          donebutt.addEventListener("click", Calendar.adddontbutton);
         } else {
           console.log("hey");
         }
@@ -316,19 +320,19 @@ function actioningbutton(newrows) {
       childbutts[index].addEventListener("click", (event) => {
         console.dir(taskname);
         if (event.target.innerText === "Edit") {
+          evento2 = event;
           donebutt.removeEventListener("click", Calendar.adddontbutton);
           changingdonebutt_inputs();
-          donebutt.addEventListener("click", (e) => {
-            event.target.parentElement.parentElement.children[0].innerText =
+          donebutt.addEventListener("click", () => {
+            evento2.target.parentElement.parentElement.children[0].innerText =
               taskname.value;
-            event.target.parentElement.parentElement.children[1].innerText =
+            evento2.target.parentElement.parentElement.children[1].innerText =
               taskdate.value;
             taskname.value = "";
             taskdate.value = "";
+            donebutt.children[0].innerText = "Add !";
+            donebutt.children[1].innerText = "Done ?";
           });
-          donebutt.children[0].innerText = "Add !";
-          donebutt.children[1].innerText = "Done ?";
-          donebutt.addEventListener("click", Calendar.adddontbutton);
         } else {
           console.log("hey");
         }
@@ -354,8 +358,6 @@ function DatetypeWriter() {
   }
 }
 function changingdonebutt_inputs() {
-  taskname.value = "";
-  taskdate.value = "";
   donebutt.children[0].innerText = "Edit !";
   donebutt.children[1].innerText = "Commited ?";
   taskname.focus();
