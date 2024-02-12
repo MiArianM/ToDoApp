@@ -333,8 +333,10 @@
   transform: translateY(-0.25em);
   
 }
+.mr{
+  margin-right: 6.05px;
+}
 .raise{
-    margin: 3px 0;
     width: 100px;
     height: 40px;
     border-radius: 5px;
