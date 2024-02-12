@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
   new Calendar(".date-input");
   categorizing();
   Calendar.DoneButton();
-  actioningbutton();
+  actioningbuttonoff();
   try {
     plus.addEventListener("click", plusToggle);
   } catch (error) {}
@@ -89,7 +89,16 @@ class Calendar {
     this.popupContainer.appendChild(next);
   }
   static DoneButton() {
-    donebutt.addEventListener("click", Calendar.adddontbutton);
+    i = 0;
+    j = 0;
+    deletething();
+    taskname.value = "";
+    taskdate.value = "";
+    taskname.setAttribute("placeholder", " Write Your Task !");
+    taskdate.setAttribute("placeholder", " Pick a date !");
+    donebutt.children[0].innerText = "Add !";
+    donebutt.children[1].innerText = "Done ?";
+    donebutt.addEventListener("click", Calendar.adddontbutton, false);
   }
   //Other Functions
   static adddontbutton() {
@@ -124,7 +133,7 @@ class Calendar {
     categorizing(newrow);
     taskname.value = "";
     taskdate.value = "";
-    actioningbutton(newrow);
+    actioningbuttonon(newrow);
     console.dir(tasknamex);
   }
 
@@ -231,7 +240,6 @@ class Calendar {
     });
   }
 }
-
 function categorizing(newrows) {
   newrows = newrows || null;
   for (let index = 0; index < butts.length; index++) {
@@ -289,58 +297,72 @@ function categorizing(newrows) {
     });
   }
 }
-function actioningbutton(newrows) {
-  newrows = newrows || null;
-  if (!newrows) {
-    actionbutton.forEach((abutt) => {
-      abutt.addEventListener("click", (event) => {
-        console.dir(taskname);
-        if (event.target.innerText === "Edit") {
-          evento1 = event;
-          donebutt.removeEventListener("click", Calendar.adddontbutton);
-          changingdonebutt_inputs();
-          donebutt.addEventListener("click", () => {
+function deletething() {
+  donebutt.removeEventListener(
+    "click",
+    () => {
+      evento1.target.parentElement.parentElement.children[0].innerText =
+        taskname.value;
+      evento1.target.parentElement.parentElement.children[1].innerText =
+        taskdate.value;
+      evento1 = null;
+      Calendar.DoneButton();
+      return;
+    },
+    false
+  );
+}
+function actioningbuttonoff() {
+  actionbutton.forEach((abutt) => {
+    abutt.addEventListener("click", (event) => {
+      console.dir(taskname);
+      if (event.target.innerText === "Edit") {
+        evento1 = event;
+        donebutt.removeEventListener("click", Calendar.adddontbutton);
+        changingdonebutt_inputs();
+        donebutt.addEventListener(
+          "click",
+          () => {
             evento1.target.parentElement.parentElement.children[0].innerText =
               taskname.value;
             evento1.target.parentElement.parentElement.children[1].innerText =
               taskdate.value;
-            taskname.value = "";
-            taskdate.value = "";
-            donebutt.children[0].innerText = "Add !";
-            donebutt.children[1].innerText = "Done ?";
-          });
-        } else {
-          console.log("hey");
-        }
-      });
+            evento1 = null;
+            Calendar.DoneButton();
+            return;
+          },
+          false
+        );
+      } else {
+        console.log("hey");
+      }
     });
-  } else if (newrows) {
-    childbutts = newrows.children[3].children;
-    for (let index = 0; index < childbutts.length; index++) {
-      childbutts[index].addEventListener("click", (event) => {
-        console.dir(taskname);
-        if (event.target.innerText === "Edit") {
-          evento2 = event;
-          donebutt.removeEventListener("click", Calendar.adddontbutton);
-          changingdonebutt_inputs();
-          donebutt.addEventListener("click", () => {
-            evento2.target.parentElement.parentElement.children[0].innerText =
-              taskname.value;
-            evento2.target.parentElement.parentElement.children[1].innerText =
-              taskdate.value;
-            taskname.value = "";
-            taskdate.value = "";
-            donebutt.children[0].innerText = "Add !";
-            donebutt.children[1].innerText = "Done ?";
-          });
-        } else {
-          console.log("hey");
-        }
-      });
-    }
+  });
+}
+function actioningbuttonon(newrows) {
+  childbutts = newrows.children[3].children;
+  for (let index = 0; index < childbutts.length; index++) {
+    childbutts[index].addEventListener("click", (event) => {
+      console.dir(taskname);
+      if (event.target.innerText === "Edit") {
+        evento2 = event;
+        donebutt.removeEventListener("click", Calendar.adddontbutton);
+        changingdonebutt_inputs();
+        donebutt.addEventListener("click", () => {
+          evento2.target.parentElement.parentElement.children[0].innerText =
+            taskname.value;
+          evento2.target.parentElement.parentElement.children[1].innerText =
+            taskdate.value;
+          evento2 = null;
+          Calendar.DoneButton();
+          return;
+        });
+      } else {
+        console.log("hey");
+      }
+    });
   }
 }
-
 function tasktypeWriter() {
   if (i < taskmassage.length) {
     msg = taskname.getAttribute("placeholder") + taskmassage.charAt(i);
@@ -365,4 +387,7 @@ function changingdonebutt_inputs() {
   tasktypeWriter();
   taskdate.setAttribute("placeholder", "");
   DatetypeWriter();
+}
+function wholething() {
+  Calendar.DoneButton();
 }
