@@ -1,5 +1,4 @@
 //Global Variables
-let plus = document.getElementById("plus");
 let trs = document.querySelectorAll("tr");
 let th = document.querySelector("th");
 let butts = document.querySelector(".FlexxButts").children;
@@ -8,10 +7,19 @@ let donebutt = document.querySelector(".custom-btn");
 let addplaceparent = document.querySelector(".rightinserting").parentNode;
 let addplace = document.querySelector(".rightinserting");
 let actionbutton = document.querySelectorAll(".raise");
+let taskname = document.querySelector(".taskname");
+let taskdate = document.querySelector(".date-input");
+let i = 0;
+let j = 0;
+let typeSpeed = 100;
+let taskmassage = "Bring Your New Task Name !";
+let Datemassage = "Pick a Right Date !";
 //........... Some LOGICS
 window.addEventListener("load", () => {
   new Calendar(".date-input");
   categorizing();
+  Calendar.DoneButton();
+  actioningbutton();
   try {
     plus.addEventListener("click", plusToggle);
   } catch (error) {}
@@ -43,7 +51,7 @@ class Calendar {
     this.selectedYear = new Date().getFullYear();
     this.buildCalendar();
     this.setMainEventListener();
-    this.DoneButton();
+    Calendar.DoneButton();
   }
   //Main Functions
   buildCalendar() {
@@ -78,40 +86,46 @@ class Calendar {
     this.popupContainer.appendChild(prev);
     this.popupContainer.appendChild(next);
   }
-  DoneButton() {
-    donebutt.addEventListener("click", () => {
-      let taskname = inputs[0].value;
-      let taskdate = inputs[1].value;
-      let fi = document.createTextNode(taskname);
-      let s = document.createTextNode(taskdate);
-      let t = document.createTextNode("Pending");
-      let Editbutton = document.createElement("button");
-      let Onbutton = document.createElement("button");
-      let Removebutton = document.createElement("button");
-      let newrow = document.createElement("tr");
-      let newcell1 = document.createElement("td");
-      let newcell2 = document.createElement("td");
-      let newcell3 = document.createElement("td");
-      let newcell4 = document.createElement("td");
-      let newcells = [newcell1, newcell2, newcell3, newcell4];
-      Editbutton.classList = "raise ed";
-      Editbutton.textContent = "Edit";
-      Onbutton.classList = "raise ou";
-      Onbutton.textContent = "On";
-      Removebutton.classList = "raise dl";
-      Removebutton.textContent = "Delete";
-      newcell1.appendChild(fi);
-      newcell2.appendChild(s);
-      newcell3.appendChild(t);
-      newcell4.append(Editbutton, Onbutton, Removebutton);
-      newcells.forEach((cell) => {
-        newrow.append(cell);
-      });
-      addplaceparent.insertBefore(newrow, addplace.nextSibling);
-      categorizing(newrow);
-    });
+  static DoneButton() {
+    donebutt.addEventListener("click", Calendar.adddontbutton);
   }
   //Other Functions
+  static adddontbutton() {
+    let tasknamex = inputs[0].value;
+    let taskdatex = inputs[1].value;
+    let fi = document.createTextNode(tasknamex);
+    let s = document.createTextNode(taskdatex);
+    let t = document.createTextNode("Pending");
+    let Editbutton = document.createElement("button");
+    let Onbutton = document.createElement("button");
+    let Removebutton = document.createElement("button");
+    let newrow = document.createElement("tr");
+    let newcell1 = document.createElement("td");
+    let newcell2 = document.createElement("td");
+    let newcell3 = document.createElement("td");
+    let newcell4 = document.createElement("td");
+    let newcells = [newcell1, newcell2, newcell3, newcell4];
+    Editbutton.classList = "raise ed mr";
+    Editbutton.textContent = "Edit";
+    Onbutton.classList = "raise ou";
+    Onbutton.textContent = "On";
+    Removebutton.classList = "raise dl";
+    Removebutton.textContent = "Delete";
+    newcell1.appendChild(fi);
+    newcell2.appendChild(s);
+    newcell3.appendChild(t);
+    newcell4.append(Editbutton, Onbutton, Removebutton);
+    newcells.forEach((cell) => {
+      newrow.append(cell);
+    });
+    addplaceparent.insertBefore(newrow, addplace.nextSibling);
+    categorizing(newrow);
+    taskname.value = "";
+    taskdate.value = "";
+    actioningbutton(newrow);
+    console.dir(tasknamex);
+  }
+
   populateTable(month, year) {
     this.table.innerHTML = "";
 
@@ -215,9 +229,6 @@ class Calendar {
     });
   }
 }
-function plusToggle() {
-  plus.classList.toggle("plus--active");
-}
 
 function categorizing(newrows) {
   newrows = newrows || null;
@@ -275,4 +286,81 @@ function categorizing(newrows) {
       }
     });
   }
+}
+function actioningbutton(newrows) {
+  newrows = newrows || null;
+  if (!newrows) {
+    actionbutton.forEach((abutt) => {
+      abutt.addEventListener("click", (event) => {
+        console.dir(taskname);
+        if (event.target.innerText === "Edit") {
+          donebutt.removeEventListener("click", Calendar.adddontbutton);
+          changingdonebutt_inputs();
+          donebutt.addEventListener("click", (e) => {
+            event.target.parentElement.parentElement.children[0].innerText =
+              taskname.value;
+            event.target.parentElement.parentElement.children[1].innerText =
+              taskdate.value;
+          });
+          donebutt.children[0].innerText = "Add !";
+          donebutt.children[1].innerText = "Done ?";
+          donebutt.addEventListener("click", Calendar.adddontbutton);
+        } else {
+          console.log("hey");
+        }
+      });
+    });
+  } else if (newrows) {
+    childbutts = newrows.children[3].children;
+    for (let index = 0; index < childbutts.length; index++) {
+      childbutts[index].addEventListener("click", (event) => {
+        console.dir(taskname);
+        if (event.target.innerText === "Edit") {
+          donebutt.removeEventListener("click", Calendar.adddontbutton);
+          changingdonebutt_inputs();
+          donebutt.addEventListener("click", (e) => {
+            event.target.parentElement.parentElement.children[0].innerText =
+              taskname.value;
+            event.target.parentElement.parentElement.children[1].innerText =
+              taskdate.value;
+            taskname.value = "";
+            taskdate.value = "";
+          });
+          donebutt.children[0].innerText = "Add !";
+          donebutt.children[1].innerText = "Done ?";
+          donebutt.addEventListener("click", Calendar.adddontbutton);
+        } else {
+          console.log("hey");
+        }
+      });
+    }
+  }
+}
+
+function tasktypeWriter() {
+  if (i < taskmassage.length) {
+    msg = taskname.getAttribute("placeholder") + taskmassage.charAt(i);
+    taskname.setAttribute("placeholder", msg);
+    i++;
+    setTimeout(tasktypeWriter, typeSpeed);
+  }
+}
+function DatetypeWriter() {
+  if (j < Datemassage.length) {
+    msg = taskdate.getAttribute("placeholder") + Datemassage.charAt(j);
+    taskdate.setAttribute("placeholder", msg);
+    j++;
+    setTimeout(DatetypeWriter, typeSpeed);
+  }
+}
+function changingdonebutt_inputs() {
+  taskname.value = "";
+  taskdate.value = "";
+  donebutt.children[0].innerText = "Edit !";
+  donebutt.children[1].innerText = "Commited ?";
+  taskname.focus();
+  taskname.setAttribute("placeholder", "");
+  tasktypeWriter();
+  taskdate.setAttribute("placeholder", "");
+  DatetypeWriter();
 }
