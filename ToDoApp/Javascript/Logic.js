@@ -10,12 +10,16 @@ let actionbutton = document.querySelectorAll(".raise");
 let taskname = document.querySelector(".taskname");
 let taskdate = document.querySelector(".date-input");
 let i = 0;
+let i1 = 0;
 let j = 0;
+let j1 = 0;
 let evento1;
 let evento2;
 let typeSpeed = 100;
+let deftaskmassage = "Write Your Task !";
 let taskmassage = "Bring Your New Task Name !";
 let Datemassage = "Pick a Right Date !";
+let deftaskDatemassage = "Pick a date !";
 //........... Some LOGICS
 window.addEventListener("load", () => {
   new Calendar(".date-input");
@@ -89,13 +93,11 @@ class Calendar {
     this.popupContainer.appendChild(next);
   }
   static DoneButton() {
-    i = 0;
-    j = 0;
     deletething();
-    taskname.value = "";
-    taskdate.value = "";
-    taskname.setAttribute("placeholder", " Write Your Task !");
-    taskdate.setAttribute("placeholder", " Pick a date !");
+    taskname.setAttribute("placeholder", "");
+    deftasktypeWriter();
+    taskdate.setAttribute("placeholder", "");
+    deftaskDatetypeWriter();
     donebutt.children[0].innerText = "Add !";
     donebutt.children[1].innerText = "Done ?";
     donebutt.addEventListener("click", Calendar.adddontbutton, false);
@@ -298,6 +300,12 @@ function categorizing(newrows) {
   }
 }
 function deletething() {
+  taskname.value = "";
+  taskdate.value = "";
+  i = 0;
+  i1 = 0;
+  j = 0;
+  j1 = 0;
   donebutt.removeEventListener(
     "click",
     () => {
@@ -311,6 +319,8 @@ function deletething() {
     },
     false
   );
+  taskname.removeAttribute("placeholder");
+  taskdate.removeAttribute("placeholder");
 }
 function actioningbuttonoff() {
   actionbutton.forEach((abutt) => {
@@ -369,6 +379,22 @@ function tasktypeWriter() {
     taskname.setAttribute("placeholder", msg);
     i++;
     setTimeout(tasktypeWriter, typeSpeed);
+  }
+}
+function deftasktypeWriter() {
+  if (i1 < deftaskmassage.length) {
+    msg = taskname.getAttribute("placeholder") + deftaskmassage.charAt(i1);
+    taskname.setAttribute("placeholder", msg);
+    i1++;
+    setTimeout(deftasktypeWriter, typeSpeed * 0.35);
+  }
+}
+function deftaskDatetypeWriter() {
+  if (j1 < deftaskDatemassage.length) {
+    msg = taskdate.getAttribute("placeholder") + deftaskDatemassage.charAt(j1);
+    taskdate.setAttribute("placeholder", msg);
+    j1++;
+    setTimeout(deftaskDatetypeWriter, typeSpeed * 0.35);
   }
 }
 function DatetypeWriter() {
