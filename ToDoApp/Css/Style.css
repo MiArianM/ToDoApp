@@ -18,7 +18,7 @@
 .HeadDoing{
     -webkit-box-shadow: 1px 3px 23px 2px #000000; 
     box-shadow: 1px 3px 23px 2px #000000;
-    width: 60%;
+    width: 70%;
 }
 .HeadDoing h1{
     margin-left: 37%;
@@ -38,7 +38,7 @@
     display: flex;
 }
 .FlexAdds>input{
-    width: 40%;
+    width: 45%;
     margin: 30px 5px;
     
 }
@@ -342,10 +342,11 @@
   margin-right: 6.05px;
 }
 .raise{
+  margin: 3px;
     width: 100px;
     height: 40px;
     border-radius: 5px;
-    padding: 2px 20px;
+    padding: 5px 20px;
     font-family: 'krub';
     font-weight: 400;
     background: transparent;
@@ -371,6 +372,7 @@
 }
 
 .ou{
+  padding: 2px 3px;
     &:hover,
     &:focus { 
       border-color: rgb(255, 102, 0);
