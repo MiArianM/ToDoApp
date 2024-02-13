@@ -3,6 +3,7 @@ let trs = document.querySelectorAll("tr");
 let th = document.querySelector("th");
 let butts = document.querySelector(".FlexxButts").children;
 let inputs = document.querySelectorAll(".di");
+let compbutt = document.querySelectorAll(".ou");
 let donebutt = document.querySelector(".custom-btn");
 let addplaceparent = document.querySelector(".rightinserting").parentNode;
 let addplace = document.querySelector(".rightinserting");
@@ -325,7 +326,6 @@ function deletething() {
 function actioningbuttonoff() {
   actionbutton.forEach((abutt) => {
     abutt.addEventListener("click", (event) => {
-      console.dir(taskname);
       if (event.target.innerText === "Edit") {
         evento1 = event;
         donebutt.removeEventListener("click", Calendar.adddontbutton);
@@ -343,8 +343,16 @@ function actioningbuttonoff() {
           },
           false
         );
-      } else {
-        console.log("hey");
+      } else if (event.target.innerText === "Complete") {
+        event.target.innerText = "Undo";
+        event.target.parentElement.parentElement.children[2].innerText =
+          "Completed";
+      } else if (event.target.innerText === "Undo") {
+        event.target.innerText = "Complete";
+        event.target.parentElement.parentElement.children[2].innerText =
+          "Pending";
+      } else if (event.target.innerText === "Delete") {
+        event.target.parentElement.parentElement.remove();
       }
     });
   });
@@ -413,7 +421,4 @@ function changingdonebutt_inputs() {
   tasktypeWriter();
   taskdate.setAttribute("placeholder", "");
   DatetypeWriter();
-}
-function wholething() {
-  Calendar.DoneButton();
 }
