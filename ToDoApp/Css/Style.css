@@ -135,8 +135,7 @@
             display: block ;
         }
        }
- 
- 
+
        .form-container input {
           background-color: transparent !important;
           border: none;
@@ -189,6 +188,9 @@
              }
           }
        }
+       table>tr>th{
+        cursor: default;
+       }
     }
     .button {
       background-color: transparent;
@@ -209,6 +211,9 @@
       &.next {
          right: 5rem;
       }
+   }
+   .button i{
+    cursor: pointer;
    }
  }
  .FlexxButts button{
