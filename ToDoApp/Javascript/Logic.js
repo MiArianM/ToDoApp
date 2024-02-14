@@ -10,6 +10,10 @@ let addplace = document.querySelector(".rightinserting");
 let actionbutton = document.querySelectorAll(".raise");
 let taskname = document.querySelector(".taskname");
 let taskdate = document.querySelector(".date-input");
+const toast = document.querySelector(".toast");
+(closeIcon = document.querySelector(".close")),
+  (progress = document.querySelector(".progress"));
+let timer1, timer2;
 let i = 0;
 let i1 = 0;
 let j = 0;
@@ -122,7 +126,7 @@ class Calendar {
     Editbutton.classList = "raise ed mr";
     Editbutton.textContent = "Edit";
     Onbutton.classList = "raise ou";
-    Onbutton.textContent = "On";
+    Onbutton.textContent = "Complete";
     Removebutton.classList = "raise dl";
     Removebutton.textContent = "Delete";
     newcell1.appendChild(fi);
@@ -287,6 +291,8 @@ function categorizing(newrows) {
           }
         });
       } else if (content === "Delete All") {
+        alertdelall();
+        alerting();
         if (newrows) {
           newrows.remove();
         }
@@ -300,6 +306,7 @@ function categorizing(newrows) {
     });
   }
 }
+
 function deletething() {
   taskname.value = "";
   taskdate.value = "";
@@ -323,10 +330,13 @@ function deletething() {
   taskname.removeAttribute("placeholder");
   taskdate.removeAttribute("placeholder");
 }
+console.dir(document.querySelector(".text-1"));
 function actioningbuttonoff() {
   actionbutton.forEach((abutt) => {
     abutt.addEventListener("click", (event) => {
       if (event.target.innerText === "Edit") {
+        taskname.value = "";
+        taskdate.value = "";
         evento1 = event;
         donebutt.removeEventListener("click", Calendar.adddontbutton);
         changingdonebutt_inputs();
@@ -338,20 +348,28 @@ function actioningbuttonoff() {
             evento1.target.parentElement.parentElement.children[1].innerText =
               taskdate.value;
             evento1 = null;
+            alertedit();
+            alerting();
             Calendar.DoneButton();
             return;
           },
           false
         );
       } else if (event.target.innerText === "Complete") {
+        alertcomplete();
+        alerting();
         event.target.innerText = "Undo";
         event.target.parentElement.parentElement.children[2].innerText =
           "Completed";
       } else if (event.target.innerText === "Undo") {
+        oopsalertcomplete();
+        alerting();
         event.target.innerText = "Complete";
         event.target.parentElement.parentElement.children[2].innerText =
           "Pending";
       } else if (event.target.innerText === "Delete") {
+        Delrow();
+        alerting();
         event.target.parentElement.parentElement.remove();
       }
     });
@@ -363,6 +381,10 @@ function actioningbuttonon(newrows) {
     childbutts[index].addEventListener("click", (event) => {
       console.dir(taskname);
       if (event.target.innerText === "Edit") {
+        taskname.value = "";
+        taskdate.value = "";
+        alertedit();
+        alerting();
         evento2 = event;
         donebutt.removeEventListener("click", Calendar.adddontbutton);
         changingdonebutt_inputs();
@@ -372,11 +394,27 @@ function actioningbuttonon(newrows) {
           evento2.target.parentElement.parentElement.children[1].innerText =
             taskdate.value;
           evento2 = null;
+          alertedit();
+          alerting();
           Calendar.DoneButton();
           return;
         });
-      } else {
-        console.log("hey");
+      } else if (event.target.innerText === "Complete") {
+        alertcomplete();
+        alerting();
+        event.target.innerText = "Undo";
+        event.target.parentElement.parentElement.children[2].innerText =
+          "Completed";
+      } else if (event.target.innerText === "Undo") {
+        oopsalertcomplete();
+        alerting();
+        event.target.innerText = "Complete";
+        event.target.parentElement.parentElement.children[2].innerText =
+          "Pending";
+      } else if (event.target.innerText === "Delete") {
+        Delrow();
+        alerting();
+        event.target.parentElement.parentElement.remove();
       }
     });
   }
@@ -421,4 +459,49 @@ function changingdonebutt_inputs() {
   tasktypeWriter();
   taskdate.setAttribute("placeholder", "");
   DatetypeWriter();
+}
+function alerting() {
+  toast.classList.add("active");
+  progress.classList.add("active");
+  timer1 = setTimeout(() => {
+    toast.classList.remove("active");
+  }, 5000);
+  timer2 = setTimeout(() => {
+    progress.classList.remove("active");
+  }, 5700);
+  closeIcon.addEventListener("click", () => {
+    toast.classList.remove("active");
+
+    setTimeout(() => {
+      progress.classList.remove("active");
+    }, 300);
+
+    clearTimeout(timer1);
+    clearTimeout(timer2);
+  });
+}
+
+function alertdelall() {
+  document.querySelectorAll(".text")[0].innerHTML = "Deleted All Rows !";
+  document.querySelectorAll(".text")[1].innerHTML =
+    "No Task Found ! Let's Do Some Work :)";
+}
+function alertedit() {
+  document.querySelectorAll(".text")[0].innerHTML = "Edited !";
+  document.querySelectorAll(".text")[1].innerHTML = "Edit Has Been Applied .";
+}
+function Delrow() {
+  document.querySelectorAll(".text")[0].innerHTML = "Deleted Task !";
+  document.querySelectorAll(".text")[1].innerHTML =
+    "The task has Been Deleted .";
+}
+function alertcomplete() {
+  document.querySelectorAll(".text")[0].innerHTML = "Nice Job !";
+  document.querySelectorAll(".text")[1].innerHTML =
+    "You have Done Your Task Good Job Mate .";
+}
+function oopsalertcomplete() {
+  document.querySelectorAll(".text")[0].innerHTML = "Oops !";
+  document.querySelectorAll(".text")[1].innerHTML =
+    "It seems You Selected Your Task as Complete ,Just Do it Buddy !";
 }
