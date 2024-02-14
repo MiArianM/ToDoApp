@@ -141,6 +141,8 @@ class Calendar {
     taskname.value = "";
     taskdate.value = "";
     actioningbuttonon(newrow);
+    Addalert();
+    alerting();
     console.dir(tasknamex);
   }
 
@@ -383,8 +385,6 @@ function actioningbuttonon(newrows) {
       if (event.target.innerText === "Edit") {
         taskname.value = "";
         taskdate.value = "";
-        alertedit();
-        alerting();
         evento2 = event;
         donebutt.removeEventListener("click", Calendar.adddontbutton);
         changingdonebutt_inputs();
@@ -485,23 +485,56 @@ function alertdelall() {
   document.querySelectorAll(".text")[0].innerHTML = "Deleted All Rows !";
   document.querySelectorAll(".text")[1].innerHTML =
     "No Task Found ! Let's Do Some Work :)";
+  toast.style.background = "#1836dd";
+  document.querySelectorAll(".text")[0].style.color = "white";
+  document.querySelectorAll(".text")[1].style.color = "black";
+  toast.children[0].children[0].classList = ["fa-solid fa-trash-can defstylea"];
 }
 function alertedit() {
   document.querySelectorAll(".text")[0].innerHTML = "Edited !";
   document.querySelectorAll(".text")[1].innerHTML = "Edit Has Been Applied .";
+  toast.style.background = "#d0dd18";
+  document.querySelectorAll(".text")[0].style.color = "#126d00";
+  document.querySelectorAll(".text")[1].style.color = "#f44040";
+  toast.children[0].children[0].classList = [
+    "fa-solid fa-pen styleb defstylea",
+  ];
 }
 function Delrow() {
   document.querySelectorAll(".text")[0].innerHTML = "Deleted Task !";
   document.querySelectorAll(".text")[1].innerHTML =
     "The task has Been Deleted .";
+  toast.style.background = "#017777";
+  document.querySelectorAll(".text")[0].style.color = "#87b913";
+  document.querySelectorAll(".text")[1].style.color = "#222222";
+  toast.children[0].children[0].classList = [
+    "fa-solid fa-circle-minus defstylea",
+  ];
 }
 function alertcomplete() {
   document.querySelectorAll(".text")[0].innerHTML = "Nice Job !";
   document.querySelectorAll(".text")[1].innerHTML =
     "You have Done Your Task Good Job Mate .";
+  toast.style.background = "#18dd49";
+  document.querySelectorAll(".text")[0].style.color = "#530097";
+  document.querySelectorAll(".text")[1].style.color = "#380016";
+  toast.children[0].children[0].classList = [
+    "fa-brands fa-angellist defstylea",
+  ];
 }
 function oopsalertcomplete() {
   document.querySelectorAll(".text")[0].innerHTML = "Oops !";
   document.querySelectorAll(".text")[1].innerHTML =
     "It seems You Selected Your Task as Complete ,Just Do it Buddy !";
+  toast.style.background = "#18b6dd";
+  document.querySelectorAll(".text")[0].style.color = "#c7140e";
+  document.querySelectorAll(".text")[1].style.color = "#2e2e2e";
+  toast.children[0].children[0].classList = [
+    "fa-solid fa-face-smile defstylea",
+  ];
+}
+function Addalert() {
+  document.querySelectorAll(".text")[0].innerHTML = "Created !";
+  document.querySelectorAll(".text")[1].innerHTML =
+    "You Runned a task Succesfully , Lets Get Do it !";
 }
