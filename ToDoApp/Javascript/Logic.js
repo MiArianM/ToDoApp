@@ -1,31 +1,42 @@
-//Global Variables
-let trs = document.querySelectorAll("tr");
-let th = document.querySelector("th");
-let butts = document.querySelector(".FlexxButts").children;
-let inputs = document.querySelectorAll(".di");
-let compbutt = document.querySelectorAll(".ou");
-let donebutt = document.querySelector(".custom-btn");
-let addplaceparent = document.querySelector(".rightinserting").parentNode;
-let addplace = document.querySelector(".rightinserting");
-let actionbutton = document.querySelectorAll(".raise");
-let taskname = document.querySelector(".taskname");
-let taskdate = document.querySelector(".date-input");
+// Selectors
+const trs = document.querySelectorAll("tr");
+const th = document.querySelector("th");
+const butts = document.querySelector(".FlexxButts").children;
+const inputs = document.querySelectorAll(".di");
+const compbutt = document.querySelectorAll(".ou");
+const donebutt = document.querySelector(".custom-btn");
+const addplaceparent = document.querySelector(".rightinserting").parentNode;
+const addplace = document.querySelector(".rightinserting");
+const actionbutton = document.querySelectorAll(".raise");
+const taskname = document.querySelector(".taskname");
+const taskdate = document.querySelector(".date-input");
 const toast = document.querySelector(".toast");
-(closeIcon = document.querySelector(".close")),
-  (progress = document.querySelector(".progress"));
+const closeIcon = document.querySelector(".close");
+const progress = document.querySelector(".progress");
+
+// Timers
 let timer1, timer2;
+
+// Counters
 let i = 0;
 let i1 = 0;
 let j = 0;
 let j1 = 0;
+
+// Event variables
 let evento1;
 let evento2;
-let typeSpeed = 100;
-let deftaskmassage = "Write Your Task !";
-let taskmassage = "Bring Your New Task Name !";
-let Datemassage = "Pick a Right Date !";
-let deftaskDatemassage = "Pick a date !";
-//........... Some LOGICS
+
+// Typing speed
+const typeSpeed = 40;
+
+// Default messages
+const deftaskmassage = "Write Your Task!";
+const taskmassage = "Bring Your New Task Name!";
+const Datemassage = "Pick a Right Date!";
+const deftaskDatemassage = "Pick a date!";
+
+// Event Listeners
 window.addEventListener("load", () => {
   new Calendar(".date-input");
   categorizing();
@@ -35,6 +46,8 @@ window.addEventListener("load", () => {
     plus.addEventListener("click", plusToggle);
   } catch (error) {}
 });
+
+// Calendar class
 class Calendar {
   constructor(inputSelector) {
     this.nameinput = document.querySelector(".taskname");
@@ -64,7 +77,7 @@ class Calendar {
     this.setMainEventListener();
     Calendar.DoneButton();
   }
-  //Main Functions
+
   buildCalendar() {
     this.popupContainer = document.createElement("div");
     this.popupContainer.classList.add("calendar-popup");
@@ -76,6 +89,7 @@ class Calendar {
     this.createButtons();
     this.populateTable(this.selectedMonth, this.selectedYear);
   }
+
   createButtons() {
     const prev = document.createElement("button");
     prev.classList.add("button", "prev");
@@ -97,17 +111,18 @@ class Calendar {
     this.popupContainer.appendChild(prev);
     this.popupContainer.appendChild(next);
   }
+
   static DoneButton() {
     deletething();
     taskname.setAttribute("placeholder", "");
     deftasktypeWriter();
     taskdate.setAttribute("placeholder", "");
     deftaskDatetypeWriter();
-    donebutt.children[0].innerText = "Add !";
-    donebutt.children[1].innerText = "Done ?";
+    donebutt.children[0].innerText = "Add!";
+    donebutt.children[1].innerText = "Done?";
     donebutt.addEventListener("click", Calendar.adddontbutton, false);
   }
-  //Other Functions
+
   static adddontbutton() {
     let tasknamex = inputs[0].value;
     let taskdatex = inputs[1].value;
@@ -197,6 +212,7 @@ class Calendar {
     }
     this.popupContainer.appendChild(this.table);
   }
+
   fillDate(day) {
     day = day < 10 ? "0" + day : day;
     let month = null;
@@ -249,6 +265,8 @@ class Calendar {
     });
   }
 }
+
+// Functions
 function categorizing(newrows) {
   newrows = newrows || null;
   for (let index = 0; index < butts.length; index++) {
@@ -332,7 +350,7 @@ function deletething() {
   taskname.removeAttribute("placeholder");
   taskdate.removeAttribute("placeholder");
 }
-console.dir(document.querySelector(".text-1"));
+
 function actioningbuttonoff() {
   actionbutton.forEach((abutt) => {
     abutt.addEventListener("click", (event) => {
@@ -377,11 +395,11 @@ function actioningbuttonoff() {
     });
   });
 }
+
 function actioningbuttonon(newrows) {
   childbutts = newrows.children[3].children;
   for (let index = 0; index < childbutts.length; index++) {
     childbutts[index].addEventListener("click", (event) => {
-      console.dir(taskname);
       if (event.target.innerText === "Edit") {
         taskname.value = "";
         taskdate.value = "";
@@ -419,6 +437,7 @@ function actioningbuttonon(newrows) {
     });
   }
 }
+
 function tasktypeWriter() {
   if (i < taskmassage.length) {
     msg = taskname.getAttribute("placeholder") + taskmassage.charAt(i);
@@ -427,22 +446,25 @@ function tasktypeWriter() {
     setTimeout(tasktypeWriter, typeSpeed);
   }
 }
+
 function deftasktypeWriter() {
   if (i1 < deftaskmassage.length) {
     msg = taskname.getAttribute("placeholder") + deftaskmassage.charAt(i1);
     taskname.setAttribute("placeholder", msg);
     i1++;
-    setTimeout(deftasktypeWriter, typeSpeed * 0.35);
+    setTimeout(deftasktypeWriter, typeSpeed * 1.25);
   }
 }
+
 function deftaskDatetypeWriter() {
   if (j1 < deftaskDatemassage.length) {
     msg = taskdate.getAttribute("placeholder") + deftaskDatemassage.charAt(j1);
     taskdate.setAttribute("placeholder", msg);
     j1++;
-    setTimeout(deftaskDatetypeWriter, typeSpeed * 0.35);
+    setTimeout(deftaskDatetypeWriter, typeSpeed * 1.25);
   }
 }
+
 function DatetypeWriter() {
   if (j < Datemassage.length) {
     msg = taskdate.getAttribute("placeholder") + Datemassage.charAt(j);
@@ -451,48 +473,50 @@ function DatetypeWriter() {
     setTimeout(DatetypeWriter, typeSpeed);
   }
 }
+
 function changingdonebutt_inputs() {
-  donebutt.children[0].innerText = "Edit !";
-  donebutt.children[1].innerText = "Commited ?";
+  donebutt.children[0].innerText = "Edit!";
+  donebutt.children[1].innerText = "Commited?";
   taskname.focus();
   taskname.setAttribute("placeholder", "");
   tasktypeWriter();
   taskdate.setAttribute("placeholder", "");
   DatetypeWriter();
 }
+
 function alerting() {
   toast.classList.add("active");
   progress.classList.add("active");
-  timer1 = setTimeout(() => {
-    toast.classList.remove("active");
-  }, 5000);
-  timer2 = setTimeout(() => {
-    progress.classList.remove("active");
-  }, 5700);
   closeIcon.addEventListener("click", () => {
     toast.classList.remove("active");
 
     setTimeout(() => {
       progress.classList.remove("active");
     }, 300);
-
     clearTimeout(timer1);
     clearTimeout(timer2);
   });
+  timer1 = setTimeout(() => {
+    toast.classList.remove("active");
+  }, 5000);
+  timer2 = setTimeout(() => {
+    progress.classList.remove("active");
+  }, 5700);
 }
 
 function alertdelall() {
-  document.querySelectorAll(".text")[0].innerHTML = "Deleted All Rows !";
+  document.querySelectorAll(".text")[0].innerHTML = "Deleted All Rows!";
   document.querySelectorAll(".text")[1].innerHTML =
-    "No Task Found ! Let's Do Some Work :)";
+    "No Task Found! Let's Do Some Work :)";
   toast.style.background = "#1836dd";
   document.querySelectorAll(".text")[0].style.color = "white";
   document.querySelectorAll(".text")[1].style.color = "black";
   toast.children[0].children[0].classList = ["fa-solid fa-trash-can defstylea"];
 }
+
 function alertedit() {
-  document.querySelectorAll(".text")[0].innerHTML = "Edited !";
-  document.querySelectorAll(".text")[1].innerHTML = "Edit Has Been Applied .";
+  document.querySelectorAll(".text")[0].innerHTML = "Edited!";
+  document.querySelectorAll(".text")[1].innerHTML = "Edit Has Been Applied.";
   toast.style.background = "#d0dd18";
   document.querySelectorAll(".text")[0].style.color = "#126d00";
   document.querySelectorAll(".text")[1].style.color = "#f44040";
@@ -500,10 +524,11 @@ function alertedit() {
     "fa-solid fa-pen styleb defstylea",
   ];
 }
+
 function Delrow() {
-  document.querySelectorAll(".text")[0].innerHTML = "Deleted Task !";
+  document.querySelectorAll(".text")[0].innerHTML = "Deleted Task!";
   document.querySelectorAll(".text")[1].innerHTML =
-    "The task has Been Deleted .";
+    "The task has Been Deleted.";
   toast.style.background = "#017777";
   document.querySelectorAll(".text")[0].style.color = "#87b913";
   document.querySelectorAll(".text")[1].style.color = "#222222";
@@ -511,10 +536,11 @@ function Delrow() {
     "fa-solid fa-circle-minus defstylea",
   ];
 }
+
 function alertcomplete() {
-  document.querySelectorAll(".text")[0].innerHTML = "Nice Job !";
+  document.querySelectorAll(".text")[0].innerHTML = "Nice Job!";
   document.querySelectorAll(".text")[1].innerHTML =
-    "You have Done Your Task Good Job Mate .";
+    "You have Done Your Task Good Job Mate.";
   toast.style.background = "#18dd49";
   document.querySelectorAll(".text")[0].style.color = "#530097";
   document.querySelectorAll(".text")[1].style.color = "#380016";
@@ -522,10 +548,11 @@ function alertcomplete() {
     "fa-brands fa-angellist defstylea",
   ];
 }
+
 function oopsalertcomplete() {
-  document.querySelectorAll(".text")[0].innerHTML = "Oops !";
+  document.querySelectorAll(".text")[0].innerHTML = "Oops!";
   document.querySelectorAll(".text")[1].innerHTML =
-    "It seems You Selected Your Task as Complete ,Just Do it Buddy !";
+    "It seems You Selected Your Task as Complete, Just Do it Buddy!";
   toast.style.background = "#18b6dd";
   document.querySelectorAll(".text")[0].style.color = "#c7140e";
   document.querySelectorAll(".text")[1].style.color = "#2e2e2e";
@@ -533,8 +560,9 @@ function oopsalertcomplete() {
     "fa-solid fa-face-smile defstylea",
   ];
 }
+
 function Addalert() {
-  document.querySelectorAll(".text")[0].innerHTML = "Created !";
+  document.querySelectorAll(".text")[0].innerHTML = "Created!";
   document.querySelectorAll(".text")[1].innerHTML =
-    "You Runned a task Succesfully , Lets Get Do it !";
+    "You Runned a task Succesfully, Lets Get Do it!";
 }
